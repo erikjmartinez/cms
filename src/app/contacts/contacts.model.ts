@@ -2,14 +2,14 @@ export class Contacts {
     public contactId: number;
     public name: string;
     public email: string;
-    public phoneNumber: number;
+    public phoneNumber: string;
     public imageURL: string;
     public group: string;
 
     constructor(contactId: number,
         name: string,
         email: string,
-        phoneNumber: number,
+        phoneNumber: string,
         imageURL: string,
         group: string) {
         this.contactId = contactId;
