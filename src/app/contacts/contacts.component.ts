@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Contacts } from './contacts.model';
+import { Contact } from './contact.model';
 
 @Component({
   selector: 'cms-contacts',
