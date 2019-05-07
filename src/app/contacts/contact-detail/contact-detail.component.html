@@ -1,8 +1,9 @@
 <div class="panel panel-default">
   <div class="panel-heading clearfix">
     <div class="pull-left panel-head">
-      <h3 class="panel-title"><strong>{{ contact.name }}</strong></h3>
-      <img [src]="contact.imageURL" alt="{{ contact.name }}" class="img-responsive">
+      <h3 class="panel-title"><strong>
+          {{ contact.name }}</strong></h3>
+      <img [src]="contact.imageURL" alt="contact.imageURL" class="img-responsive">
     </div>
     <div class="btn-group pull-right">
       <button class="btn btn-primary btn-md">Edit</button>
@@ -10,7 +11,11 @@
     </div>
   </div>
   <div class="panel-body">
-    <p> <span><strong> Email: </strong></span> {{ contact.email }} </p>
-    <p> <span><strong> Phone: </strong></span> {{ contact.phoneNumber }} </p>
+    <p> <strong> Email: </strong>
+      {{ contact.email }}
+    </p>
+    <p> <strong> Phone: </strong>
+      {{ contact.phoneNumber }}
+    </p>
   </div>
 </div>
