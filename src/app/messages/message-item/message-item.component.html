@@ -1,6 +1,6 @@
-<a href="" class="list-group-item clearfix">
+<a href="" class="list-group-item clearfix" (click)="onSelected()">
   <div class="">
-    <span class="messageHeader">SenderName</span>
-    <div class="messageText">MessageText</div>
+    <p class="messageHeader">{{ message.subject }}</p>
+    <p class="messageText">{{ message.msgText }}</p>
   </div>
 </a>

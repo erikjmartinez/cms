@@ -1,4 +1,4 @@
-export class Messages {
+export class Message {
 
     constructor(
         public messageId: number,
