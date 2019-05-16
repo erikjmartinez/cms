@@ -8,9 +8,6 @@ import { from } from 'rxjs';
 })
 export class ContactDetailComponent implements OnInit {
   @Input() contact: Contact;
-  // = new Contact(
-  //     1, 'Bro. Jackson', 'jacksonk@byui.edu', '208-496-3771', 'https://web.byui.edu/Directory/Employee/jacksonk.jpg', null
-  //   );
 
   constructor() { }
 

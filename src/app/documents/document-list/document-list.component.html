@@ -7,7 +7,7 @@
   </div>
   <div class="panel-body">
     <div class="center-panel">
-      <cms-document-item *ngfor="let document of documents" [document]="document"
+      <cms-document-item *ngFor="let document of documents" [document]="document"
         (documentSelected)="onSelectedDocument(document)">
       </cms-document-item>
     </div>
