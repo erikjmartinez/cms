@@ -6,7 +6,7 @@ export class Contact {
         public email: string,
         public phoneNumber: string,
         public imageURL: string,
-        public group: string) {
+        public group: Contact[]) {
 
     }
 }
