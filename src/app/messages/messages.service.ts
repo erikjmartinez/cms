@@ -21,7 +21,7 @@ export class MessagesService {
   getMessage(id: number): Message {
     for (let message of this.messages) {
       if (message.messageId === id) {
-        return message;;
+        return message;
       }
     }
     return null;

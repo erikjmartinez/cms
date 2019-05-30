@@ -3,9 +3,9 @@
     <div class="row pad-all">
       <h4 class="title margin-left-right">{{ document?.name }}</h4>
       <div class="row pull-right margin-left-right btn-toolbar">
-        <a class="btn btn-primary btn-md">View</a>
-        <a class="btn btn-info btn-md">Edit</a>
-        <a class="btn btn-danger btn-md">Delete</a>
+        <a class="btn btn-primary btn-md" (click)="onView()">View</a>
+        <a class="btn btn-info btn-md" routerLink="edit">Edit</a>
+        <a class="btn btn-danger btn-md" (click)="onDelete()">Delete</a>
       </div>
     </div>
   </div>
@@ -14,13 +14,13 @@
       <div class="row">
         <label>Description:</label>
         <span class="label-value">
-          {{ document.description }}</span>
+          {{ document?.description }}</span>
       </div>
       <br>
       <div class="row">
         <label>URL:</label>
         <span class="label-value">
-          {{ document.url }}</span>
+          {{ document?.url }}</span>
       </div>
     </div>
   </div>

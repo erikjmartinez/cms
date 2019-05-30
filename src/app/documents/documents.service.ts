@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable, EventEmitter, Inject } from '@angular/core';
 import { Document } from './document.model';
 import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 
@@ -6,13 +6,18 @@ import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
   providedIn: 'root'
 })
 export class DocumentsService {
-  selectedDocumentEvent = new EventEmitter<Document>();
+  selectedDocumentEvent = new EventEmitter<Document[]>();
+  changedDocumentEvent = new EventEmitter<Document[]>();
   documents: Document[] = [];
 
   constructor() {
     this.documents = MOCKDOCUMENTS;
   }
 
+  sortAndSend() {
+    this.documents.sort((a, b) => a.name > b.name ? 1 : b.name > a.name ? -1 : 0);
+    this.selectedDocumentEvent.next(this.documents.slice());
+  }
   getDocuments(): Document[] {
     return this.documents.slice();
   }
@@ -24,5 +29,17 @@ export class DocumentsService {
       }
     }
     return null;
+  }
+
+  deleteDocument(document: Document) {
+    if (document === null) {
+      return;
+    }
+    const pos = this.documents.indexOf(document);
+    if (pos < 0) {
+      return;
+    }
+    this.documents.splice(pos, 1);
+    this.changedDocumentEvent.emit(this.documents.slice());
   }
 }

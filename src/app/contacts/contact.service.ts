@@ -1,14 +1,13 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Contact } from './contact.model';
 import { MOCKCONTACTS } from './MOCKCONTACTS'
-import { from, concat } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactService {
-  contactSelectedEvent = new EventEmitter<Contact>();
   contacts: Contact[] = [];
+  contactSelectedEvent = new EventEmitter<Contact>();
 
   constructor() {
     this.contacts = MOCKCONTACTS;
@@ -18,9 +17,9 @@ export class ContactService {
   }
 
   getContact(id: number): Contact {
-    for (let i = 0; i < Contact.length; i++) {
-      if (this.contacts[i].contactId === id) {
-        return this.contacts[i];
+    for (let contact of this.contacts) {
+      if (contact.contactId === id) {
+        return contact;
       }
     }
     return null;

@@ -58,8 +58,8 @@ export const MOCKDOCUMENTS: any[] = [
       {
         documentId: 14, name: 'Case 3 – Implementing Model Layer', url: 'https://rkjackson.wordpress.com/cases/case-3/',
         children: [
-          { 'id': '36', name: 'Team Assignment', 'description': 'Create your first JavaBean class' }
-          , { 'id': '37', name: 'Individual Assignment', 'description': 'Create remaining JavaBean classes' }
+          { documentId: 36, name: 'Team Assignment', 'description': 'Create your first JavaBean class' }
+          , { documentId: 37, name: 'Individual Assignment', 'description': 'Create remaining JavaBean classes' }
         ]
       },
       { documentId: 15, name: 'Case 4 – Enterprise Java Session Beans', url: 'https://rkjackson.wordpress.com/cases/case-4/' },
@@ -73,27 +73,27 @@ export const MOCKDOCUMENTS: any[] = [
     url: 'https://content.byui.edu/file/b7c3e5ed-6947-497f-9d32-4e5b6b397cac/1/CIT 366 course description.pdf',
     children: [
       {
-        'id': '21',
+        documentId: 21,
         'name': 'Lesson 1 - JavaScript Best Practices',
         'url': 'https://content.byui.edu/file/f0594919-9524-47eb-9f4d-5c7239c3c002/1/Lesson1Introduction.pdf'
       },
       {
-        'id': '22',
+        documentId: 22,
         'name': 'Lesson 2 - The DOM and JQuery',
         'url': 'https://content.byui.edu/file/c67e59fd-990c-4adc-9232-8027f847c8b9/1/Lesson2Introduction.pdf'
       },
       {
-        'id': '23',
+        documentId: 23,
         'name': 'Lesson 3 - Angular 2 Framework 1',
         'url': 'https://content.byui.edu/file/aa9b6af5-b882-48f5-8321-caca980e5ec9/1/Lesson3Introduction.pdf'
       },
       {
-        'id': '24',
+        documentId: 24,
         'name': 'Lesson 4 - Angular 2 Framework 2',
         'url': 'https://content.byui.edu/file/2c4ddd6c-dce4-408d-b581-f254a13e4d10/1/Lesson4Introduction.pdf'
       },
       {
-        'id': '25',
+        documentId: 25,
         'name': 'Lesson 5 - Angular 2 Framework 3',
         'url': 'https://content.byui.edu/file/66dc0765-22a7-4cd8-a184-942c607636fb/1/Lesson5Introduction.pdf'
       }
