@@ -20,7 +20,8 @@ import { TestComponent } from './test/test.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DocumentViewComponent } from './documents/document-view/document-view.component';
 import { DocumentEditComponent } from './documents/document-edit/document-edit.component'
-import { WindRefService } from './wind-ref.service'
+import { WindRefService } from './wind-ref.service';
+import { ContactsEditComponent } from './contacts/contacts-edit/contacts-edit.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +41,8 @@ import { WindRefService } from './wind-ref.service'
     DropdownDirective,
     TestComponent,
     DocumentViewComponent,
-    DocumentEditComponent
+    DocumentEditComponent,
+    ContactsEditComponent
   ],
   imports: [
     BrowserModule,

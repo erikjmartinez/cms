@@ -14,16 +14,12 @@ export class DocumentsService {
     this.documents = MOCKDOCUMENTS;
   }
 
-  sortAndSend() {
-    this.documents.sort((a, b) => a.name > b.name ? 1 : b.name > a.name ? -1 : 0);
-    this.selectedDocumentEvent.next(this.documents.slice());
-  }
   getDocuments(): Document[] {
     return this.documents.slice();
   }
 
   getDocument(id: number): Document {
-    for (let i = 0; i < Document.length; i++) {
+    for (let i = 0; i < this.documents.length; i++) {
       if (this.documents[i].documentId === id) {
         return this.documents[i];
       }
@@ -35,11 +31,11 @@ export class DocumentsService {
     if (document === null) {
       return;
     }
-    const pos = this.documents.indexOf(document);
-    if (pos < 0) {
+    const dd = this.documents.indexOf(document);
+    if (dd < 0) {
       return;
     }
-    this.documents.splice(pos, 1);
+    this.documents.splice(dd, 1);
     this.changedDocumentEvent.emit(this.documents.slice());
   }
 }

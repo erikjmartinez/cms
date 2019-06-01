@@ -2,11 +2,11 @@
   <div class="panel-heading clearfix">
     <h3 class="panel-title pull-left">Contacts</h3>
     <div class="btn-group pull-right">
-      <a href="#" class="btn btn-success btn-sm">Add Contact</a>
+      <a href="#" class="btn btn-success btn-sm" routerLink="new">Add Contact</a>
     </div>
   </div>
   <div class="panel-body">
-    <cms-contact-item *ngFor="let contact of contacts" [contact]="contact"
-      (contactSelected)="onContactSelected(contact)">
+    <cms-contact-item *ngFor="let contact of contacts" [contact]="contact">
     </cms-contact-item>
   </div>
+  <!-- (contactSelected)="onContactSelected(contact)" -->

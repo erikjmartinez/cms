@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Output, Inject, Injectable } from '@an
 import { Contact } from '../contact.model';
 import { ContactService } from '../contact.service';
 import { from } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'cms-contact-list',
   templateUrl: './contact-list.component.html',
@@ -10,23 +11,26 @@ import { from } from 'rxjs';
 
 export class ContactListComponent implements OnInit {
   //@Output() contactWasSelected = new EventEmitter<Contact>();
-
   contacts: Contact[];
-  // = [
-  //   new Contact(1, 'Bro. Jackson', 'jacksonk@byui.edu', '208-496-3771', 'https://web.byui.edu/Directory/Employee/jacksonk.jpg', 'BYUI-Profe'),
-  //   new Contact(2, 'Bro. Barzee', 'barzeer@byui.edu', '208-496-3768', 'https://web.byui.edu/Directory/Employee/barzeer.jpg', 'BYUI-Profe')
-  // ];
 
-  constructor(private contactService: ContactService) {
-    this.contacts = this.contactService.getContacts();
+  constructor(private contactService: ContactService,
+    private router: Router,
+    private route: ActivatedRoute) {
+
   }
 
   ngOnInit() {
-
+    this.contacts = this.contactService.getContacts();
+    this.contactService.contactChangedEvent
+      .subscribe(
+        (contacts: Contact[]) => {
+          this.contacts = contacts;
+        }
+      )
   }
 
-  onContactSelected(contact: Contact) {
-    this.contactService.contactSelectedEvent.emit(contact);
-  }
+  // onContactSelected(contact: Contact) {
+  //   this.contactService.contactSelectedEvent.emit(contact);
+  // }
 
 }

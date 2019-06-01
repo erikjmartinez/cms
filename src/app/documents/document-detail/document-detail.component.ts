@@ -10,7 +10,7 @@ import { WindRefService } from 'src/app/wind-ref.service';
 })
 export class DocumentDetailComponent implements OnInit {
   document: Document;
-  id: number
+  id: number;
   nativeWindow: any;
 
   constructor(private documentService: DocumentsService,
