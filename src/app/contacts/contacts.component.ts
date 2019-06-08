@@ -9,6 +9,7 @@ import { ContactService } from './contact.service';
 })
 export class ContactsComponent implements OnInit {
   selectedContact: Contact;
+
   constructor(private contactService: ContactService) { }
 
   ngOnInit() {
@@ -17,7 +18,7 @@ export class ContactsComponent implements OnInit {
         (contact: Contact) => {
           this.selectedContact = contact;
         }
-      );
+      )
   }
 
 }
