@@ -7,10 +7,9 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class DocumentsService {
-  selectedDocumentEvent = new EventEmitter<Document[]>();
-  changedDocumentEvent = new EventEmitter<Document[]>();
-
   documents: Document[] = [];
+  selectedDocumentEvent = new EventEmitter<Document[]>();
+  //changedDocumentEvent = new EventEmitter<Document[]>();  
   documentListChangedEvent = new Subject<Document[]>();
   maxDocumentId: number;
 
@@ -24,9 +23,7 @@ export class DocumentsService {
     let maxId = 0;
 
     for (let i = 0; i < this.documents.length; i++) {
-
       let currentId = +this.documents[i].documentId;
-
       if (currentId < maxId) {
         maxId = currentId
       }

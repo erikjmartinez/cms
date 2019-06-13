@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header.component';
 import { ContactsComponent } from './contacts/contacts.component';
@@ -22,6 +21,9 @@ import { DocumentViewComponent } from './documents/document-view/document-view.c
 import { DocumentEditComponent } from './documents/document-edit/document-edit.component'
 import { WindRefService } from './wind-ref.service';
 import { ContactsEditComponent } from './contacts/contacts-edit/contacts-edit.component'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DndModule } from 'ng2-dnd';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +48,10 @@ import { ContactsEditComponent } from './contacts/contacts-edit/contacts-edit.co
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    DndModule.forRoot()
   ],
   providers: [WindRefService],
   bootstrap: [AppComponent]

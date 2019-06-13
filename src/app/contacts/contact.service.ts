@@ -7,12 +7,14 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class ContactService {
-  contactSelectedEvent = new EventEmitter<Contact>();
-  contactChangedEvent = new EventEmitter<Contact[]>();
+
+  //contactChangedEvent = new EventEmitter<Contact[]>();
 
   contacts: Contact[] = [];
-  contactListChangedEvent = new Subject<Contact[]>();
   maxContactId: number;
+  contactListChangedEvent = new Subject<Contact[]>();
+  contactSelectedEvent = new EventEmitter<Contact>();
+
 
   constructor() {
     this.contacts = MOCKCONTACTS;
