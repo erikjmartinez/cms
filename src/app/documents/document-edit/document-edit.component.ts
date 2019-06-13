@@ -24,16 +24,16 @@ export class DocumentEditComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(
       (params: Params) => {
-        let id = params['id'];
+        let id = +params['id'];
 
-        if (id === undefined || id === null) {
+        if (!id) {
           this.editMode = false;
           return;
         }
 
         this.originalDocument = this.documentService.getDocument(id);
 
-        if (this.originalDocument === undefined || this.originalDocument === null) {
+        if (!this.originalDocument) {
           return;
         }
 
@@ -44,8 +44,8 @@ export class DocumentEditComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     let values = form.value;
-    //let id = this.route.params[documentId];    
-    let newDocument = new Document(' ', values.title, values.description, values.url, null);
+
+    let newDocument = new Document(+' ', values.name, values.description, values.url, null);
 
     if (this.editMode === true) {
       this.documentService.updateDocument(this.originalDocument, newDocument);

@@ -22,9 +22,10 @@ export class ContactsEditComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.route.params.subscribe((params: Params) => {
+    this.route.params.subscribe(
+      (params: Params) => {
       this.editMode = false;
-      let id = params['id'];
+      let id = +params['id'];
       if (id === null || id === undefined) {
         return;
       }
