@@ -13,7 +13,7 @@ export class ContactListComponent implements OnInit {
   //@Output() contactWasSelected = new EventEmitter<Contact>();
   contacts: Contact[];
   subscription: Subscription;
-
+  term: string;
   constructor(private contactService: ContactService,
     private router: Router,
     private route: ActivatedRoute) {
@@ -36,5 +36,7 @@ export class ContactListComponent implements OnInit {
   // onContactSelected(contact: Contact) {
   //   this.contactService.contactSelectedEvent.emit(contact);
   // }
-
+  onKeyPress(value: string) {
+    this.term = value;
+  }
 }

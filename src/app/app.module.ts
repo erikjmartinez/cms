@@ -23,6 +23,8 @@ import { WindRefService } from './wind-ref.service';
 import { ContactsEditComponent } from './contacts/contacts-edit/contacts-edit.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DndModule } from 'ng2-dnd';
+import { ContactsFilterPipe } from './contacts/contacts-filter.pipe';
+import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -44,11 +46,13 @@ import { DndModule } from 'ng2-dnd';
     TestComponent,
     DocumentViewComponent,
     DocumentEditComponent,
-    ContactsEditComponent
+    ContactsEditComponent,
+    ContactsFilterPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     DndModule.forRoot()
