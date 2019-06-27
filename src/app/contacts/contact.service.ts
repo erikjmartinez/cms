@@ -9,8 +9,8 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ContactService {
-  contacts: Contact[] = [];
-  maxContactId: number;
+  private contacts: Contact[] = [];
+  private maxContactId: number;
   contactListChangedEvent = new Subject<Contact[]>();
   contactSelectedEvent = new EventEmitter<Contact>();
 
@@ -40,27 +40,30 @@ export class ContactService {
       });
   }
 
-  getContacts(): Contact[] {
+  getContacts() {
     this.http.get<Contact[]>('https://cmsapp-b29f9.firebaseio.com/contacts.json')
       .subscribe(
         (contacts: Contact[]) => {
           this.contacts = contacts;
-          this.maxContactId = this.getMaxId();          
+          this.maxContactId = this.getMaxId();
           this.contacts.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
-          this.contactListChangedEvent.next(this.contacts.slice()
-          )
+          this.contactListChangedEvent.next(this.contacts.slice());
         },
         (error: any) => {
           console.log(error);
         }
       );
-    return this.contacts.slice();
+    //return this.contacts.slice();
   }
 
   getContact(id: number): Contact {
-    for (let contact of this.contacts) {
-      if (contact.contactId === id) {
-        return contact;
+    console.log(this.contacts);
+
+    if (this.contacts.length > 0) {
+      for (let contact of this.contacts) {
+        if (contact.contactId === id) {
+          return contact;
+        }
       }
     }
     return null;
@@ -73,6 +76,7 @@ export class ContactService {
     this.maxContactId++;
     newContact.contactId = this.maxContactId;
     this.contacts.push(newContact);
+
     let contactListClone = this.contacts.slice();
     this.storeContacts(contactListClone);
   }
@@ -89,6 +93,7 @@ export class ContactService {
 
     newContact.contactId = originalContact.contactId;
     this.contacts[pos] = newContact;
+    
     let contactListClone = this.contacts.slice();
     this.storeContacts(contactListClone);
   }

@@ -21,7 +21,7 @@ export class ContactListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.contacts = this.contactService.getContacts();
+    this.contactService.getContacts();
     this.subscription = this.contactService.contactListChangedEvent
       .subscribe(
         (contacts: Contact[]) => {
@@ -33,9 +33,7 @@ export class ContactListComponent implements OnInit {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-  // onContactSelected(contact: Contact) {
-  //   this.contactService.contactSelectedEvent.emit(contact);
-  // }
+
   onKeyPress(value: string) {
     this.term = value;
   }

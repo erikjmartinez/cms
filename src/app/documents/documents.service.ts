@@ -23,13 +23,13 @@ export class DocumentsService {
     let maxId = 0;
     for (let i = 0; i < this.documents.length; i++) {
       let currentId = +this.documents[i].documentId;
-      if (currentId < maxId) {
+      if (currentId > maxId) {
         maxId = currentId
       }
     }
-    return maxId
+    return maxId;
   }
-  
+
   sortAndSend() {
     this.documents.sort((a, b) => a.documentId > b.documentId ? 1 : b.documentId > a.documentId ? -1 : 0);
     this.documentListChangedEvent.next(this.documents.slice());
@@ -37,12 +37,12 @@ export class DocumentsService {
 
   storeDocuments(documents: Document[]) {
     let json = JSON.stringify(documents);
-    let header = new HttpHeaders({ 'Content-Type': 'application/json'});
+    let header = new HttpHeaders({ 'Content-Type': 'application/json' });
     //header.set('Content-Type', 'application/json');
-    this.http.put('https://cmsapp-b29f9.firebaseio.com/documents.json', json, {headers: header})
-      .subscribe((response: Response)=>{
-      this.documentListChangedEvent.next(documents.slice());
-    });
+    this.http.put('https://cmsapp-b29f9.firebaseio.com/documents.json', json, { headers: header })
+      .subscribe((response: Response) => {
+        this.documentListChangedEvent.next(documents.slice());
+      });
   }
 
   getDocuments(): Document[] {

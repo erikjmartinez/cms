@@ -14,17 +14,18 @@ export class MessageItemComponent implements OnInit {
   @Input() message: Message;
   messageSender: string = '';
   canEdit: boolean = false;
-  //@Output() messageSelected = new EventEmitter<void>();
 
   constructor(private contactService: ContactService) { }
 
   ngOnInit() {
+    // this.contactService.getContact(this.message.sender)
     console.log(this.message);
     let contact: Contact = this.contactService.getContact(this.message.sender);
-    this.messageSender = contact.name;
-  }
-
-  onSelected() {
-    //this.messageSelected.emit;
+    if (contact) {
+      this.messageSender = contact.name;
+    } else
+    {
+      this.messageSender = 'Contact Name Not Available';
+    }
   }
 }
