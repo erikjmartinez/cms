@@ -18,7 +18,8 @@ const documentRoutes = require('./server/routes/documents');
 // establish a connection to the mongo database
 // *** Important *** change yourPort and yourDatabase
 //     to those used by your database
-mongoose.connect('mongodb://localhost:27017/cms', {
+mongoose.connect('mongodb://localhost:27017/cms',
+{
   useNewUrlParser: true
 }, (err, res) => {
   if (err) {
