@@ -28,16 +28,21 @@ export class ContactService {
     return maxId;
   }
 
-  storeContacts(contacts: Contact[]) {
-    let json = JSON.stringify(contacts);
-    let header = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.put('http://localhost:3000/contacts', json, { headers: header })
-      .subscribe((response: Response) => {
-        this.contactListChangedEvent.next(contacts.slice());
-      });
+  sortAndSend() {
+    this.contacts.sort((a, b) => a.name > b.name ? 1 : b.name > a.name ? -1 : 0);
+    this.contactListChangedEvent.next(this.contacts.slice());
   }
 
-  getContacts() {
+  // storeContacts(contacts: Contact[]) {
+  //   let json = JSON.stringify(contacts);
+  //   let header = new HttpHeaders({ 'Content-Type': 'application/json' });
+  //   this.http.put('http://localhost:3000/contacts', json, { headers: header })
+  //     .subscribe((response: Response) => {
+  //       this.contactListChangedEvent.next(contacts.slice());
+  //     });
+  // }
+
+  getContacts(): Contact[] {
     this.http.get<{ message: string, contacts: Contact[] }>('http://localhost:3000/contacts')
       .subscribe(
         (contactData) => {
@@ -50,49 +55,47 @@ export class ContactService {
           console.log(error);
         }
       );
-    //return this.contacts.slice();
+    return this.contacts.slice();
   }
 
   getContact(id: number): Contact {
-    console.log(this.contacts);
-
-    if (this.contacts.length > 0) {
-      for (let contact of this.contacts) {
-        if (contact.contactId === id) {
-          return contact;
-        }
+    for (let contact of this.contacts) {
+      if (contact.contactId === id) {
+        return contact;
       }
     }
     return null;
   }
 
   addContact(newContact: Contact) {
-    if (newContact === null) {
+    if (!newContact) {
       return;
     }
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
 
-    newContact.contactId = +'';
+    newContact.contactId = 0;
     const strContact = JSON.stringify(newContact);
 
-    this.http.post('http://localhost:3000/contacts'
+    this.http.post<{ message: String, contact: Contact }>('http://localhost:3000/contacts'
       , strContact
       , { headers: headers })
       .subscribe(
-        (contacts: Contact[]) => {
-          this.contacts = contacts;
+        (responseData) => {
+          this.contacts.push(responseData.contact);
+          this.sortAndSend();
           this.contactListChangedEvent.next(this.contacts.slice());
         }
       );
   }
 
+  // WORKS
   updateContact(originalContact: Contact, newContact: Contact) {
     if (!originalContact || !newContact) {
       return;
     }
-    
+
     const pos = this.contacts.indexOf(originalContact);
     if (pos < 0) {
       return;
@@ -101,15 +104,15 @@ export class ContactService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
+    newContact.contactId = originalContact.contactId;
+    //const strContact = JSON.stringify(newContact);
 
-    const strContact = JSON.stringify(newContact);
-
-    this.http.patch('http://localhost:3000/contacts/' + originalContact.contactId
-      , strContact
+    this.http.put('http://localhost:3000/contacts/' + originalContact.contactId
+      , newContact
       , { headers: headers })
       .subscribe(
-        (contacts: Contact[]) => {
-          this.contacts = contacts;
+        (response: Response) => {
+          this.contacts[pos] = newContact;
           this.contactListChangedEvent.next(this.contacts.slice());
         });
   }
@@ -119,11 +122,18 @@ export class ContactService {
     if (!contact) {
       return;
     }
+
+    const pos = this.contacts.findIndex(c => c.contactId === contact.contactId);
+
+    if (pos < 0) {
+      return;
+    }
+
     this.http.delete('http://localhost:3000/contacts/' + contact.contactId)
       .subscribe(
-        (contacts: Contact[]) => {
-          this.contacts = contacts;
-          this.contactListChangedEvent.next(this.contacts.slice());
+        (response: Response) => {
+          this.contacts.splice(pos, 1);
+          this.sortAndSend();
         }
       );
   }

@@ -16,6 +16,7 @@ export class ContactsEditComponent implements OnInit {
   editMode: boolean = false;
   hasGroup: boolean = false;
   invalidGroupContact: boolean = false;
+  contactId: number;
 
   constructor(private contactService: ContactService,
     private router: Router,
@@ -23,34 +24,34 @@ export class ContactsEditComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(
-      (params: Params) => {      
-      let id = +params['id'];
+      (params: Params) => {
+        this.contactId = +params['id'];
 
-      if (!id) {
-        this.editMode = false;
-        return;
-      }
+        if (!this.contactId) {
+          this.editMode = false;
+          return;
+        }
 
-      this.originalContact = this.contactService.getContact(id);
+        this.originalContact = this.contactService.getContact(this.contactId);
 
-      // let contact = this.contactService.getContact(id);
-      if (!this.originalContact) {
-        return;
-      }
+        // let contact = this.contactService.getContact(id);
+        if (!this.originalContact) {
+          return;
+        }
 
-      //this.originalContact = contact;
-      this.editMode = true;
-      this.contact = JSON.parse(JSON.stringify(this.originalContact));
+        //this.originalContact = contact;
+        this.editMode = true;
+        this.contact = JSON.parse(JSON.stringify(this.originalContact));
 
-      if (this.originalContact.group) {
-        this.groupContacts = this.originalContact.group.slice();
-      }
-    });
+        if (this.originalContact.group) {
+          this.groupContacts = this.originalContact.group.slice();
+        }
+      });
   }
 
   onSubmit(form: NgForm) {
     let contact = new Contact(
-      form.value.contactId,
+      0,
       form.value.name,
       form.value.email,
       form.value.phoneNumber,
@@ -70,6 +71,14 @@ export class ContactsEditComponent implements OnInit {
     this.router.navigate(['/contacts']);
   }
 
+
+
+
+
+
+
+
+  
   isInvalidContact(newContact: Contact) {
     if (!newContact) {
       return true;

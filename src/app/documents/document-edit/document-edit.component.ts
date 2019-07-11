@@ -10,7 +10,6 @@ import { Document } from '../document.model';
   styleUrls: ['./document-edit.component.css']
 })
 export class DocumentEditComponent implements OnInit {
-  //@ViewChild('documentForm') docForm: NgForm;
   originalDocument: Document;
   document: Document;
   editMode: boolean = false;
@@ -43,17 +42,16 @@ export class DocumentEditComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    let values = form.value;
-
-    let newDocument = new Document(0,
-     values.name, 
-     values.description, 
-     values.url, null);
+    let document = new Document(
+      0,
+      form.value.name,
+      form.value.description,
+      form.value.url, null);
 
     if (this.editMode === true) {
-      this.documentService.updateDocument(this.originalDocument, newDocument);
+      this.documentService.updateDocument(this.originalDocument, document);
     } else {
-      this.documentService.addDocument(newDocument);
+      this.documentService.addDocument(document);
     }
 
     this.router.navigate(['/documents']);

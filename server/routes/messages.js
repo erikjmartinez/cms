@@ -17,16 +17,6 @@ var getMessages = function (req, res) {
   });
 }
 
-var saveMessage = function (req, res) {
-  Message.save(req.params.id, (err, message) => {
-    if (err)
-      res.status(500).json({
-        message: 'Error saving message :('
-      });
-    getMessages(message);
-  });
-}
-
 var deleteMessage = function (req, res) {
   Message.remove(req.params.id, (err, message) => {
     if (err)
@@ -50,22 +40,29 @@ router.get('/', (req, res, next) => {
     });
 });
 
-
-
-router.post('/', function (req, res) {
+router.post('/', (req, res, next) => {
   var maxMessageId = sequenceGenerator.nextId("messages");
 
   var message = new Message({
-    messageId: maxMessageId,
-    subject: req.body.subject,
-    msgText: req.body.msgText,
-    sender: req.body.sender
+      messageId: maxMessageId,
+      subject: req.body.subject,
+      msgText: req.body.msgText,
+      sender: req.body.sender
   });
 
-  saveMessage(res, message);
+  message.save()
+    .then(createdMessage => {
+      res.status(201).json({
+        message: 'Message added successfully',
+        document: createdMessage
+      });
+    })
+    .catch(error => {
+      returnError(res, error);
+    });
 });
 
-router.patch('/:id', function (req, res) {
+router.put('/:id', function (req, res) {
   Message.findOne({
     id: req.params.id
   }, function (err, message) {

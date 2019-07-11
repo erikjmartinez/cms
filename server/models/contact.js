@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var schema = new Schema({
+var contactSchema = new Schema({
   contactId: {
     type: Number,
     required: true
@@ -28,4 +28,4 @@ var schema = new Schema({
   }
 });
 
-module.exports = mongoose.model('Contact', schema);
+module.exports = mongoose.model('Contact', contactSchema);

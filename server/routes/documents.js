@@ -25,6 +25,22 @@ router.get('/', (req, res, next) => {
     });
 });
 
+router.get('/:id', (req, res, next) => {
+  Contact.findOne({
+      documentId: req.params.id
+    })
+    .populate('group')
+    .then(contact => {
+      res.status(200).json({
+        message: 'Contact fetched successfully',
+        contact: contact
+      });
+    })
+    .catch(error => {
+      returnError(res, error);
+    });
+})
+
 router.post('/', (req, res, next) => {
   const maxDocumentId = sequenceGenerator.nextId("documents");
 
@@ -34,7 +50,7 @@ router.post('/', (req, res, next) => {
     description: req.body.description,
     url: req.body.url
   });
-
+ 
   document.save()
     .then(createdDocument => {
       res.status(201).json({
@@ -49,7 +65,7 @@ router.post('/', (req, res, next) => {
 
 router.put('/:id', (req, res, next) => {
   Document.findOne({
-      id: req.params.id
+      documentId: +req.params.id
     })
     .then(document => {
       document.name = req.body.name;
@@ -57,7 +73,7 @@ router.put('/:id', (req, res, next) => {
       document.url = req.body.url;
 
       Document.updateOne({
-          id: req.params.id
+          documentId: +req.params.id
         }, document)
         .then(result => {
           res.status(204).json({
@@ -80,11 +96,11 @@ router.put('/:id', (req, res, next) => {
 
 router.delete("/:id", (req, res, next) => {
   Document.findOne({
-      id: req.params.id
+      documentId: +req.params.id
     })
     .then(document => {
       Document.deleteOne({
-          id: req.params.id
+          documentId: req.params.id
         })
         .then(result => {
           res.status(204).json({

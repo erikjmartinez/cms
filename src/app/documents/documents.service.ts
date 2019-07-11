@@ -6,9 +6,10 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
+
 export class DocumentsService {
-  documents: Document[] = [];
-  maxDocumentId: number;
+  private documents: Document[] = [];
+  private maxDocumentId: number;
   selectedDocumentEvent = new EventEmitter<Document[]>();
   documentListChangedEvent = new Subject<Document[]>();
 
@@ -28,16 +29,8 @@ export class DocumentsService {
   }
 
   sortAndSend() {
-    this.documents.sort((a, b) => a.documentId > b.documentId ? 1 : b.documentId > a.documentId ? -1 : 0);
+    this.documents.sort((a, b) => a.name > b.name ? 1 : b.name > a.name ? -1 : 0);
     this.documentListChangedEvent.next(this.documents.slice());
-  }
-
-  storeDocuments(documents: Document[]) {
-    let header = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.put('http://localhost:3000/documents', documents, { headers: header })
-      .subscribe((response: Response) => {
-        this.documentListChangedEvent.next(documents.slice());
-      });
   }
 
   getDocuments(): Document[] {
@@ -46,9 +39,8 @@ export class DocumentsService {
         (documentData) => {
           this.documents = documentData.documents;
           this.maxDocumentId = this.getMaxId();
-          this.documents.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
-          this.documentListChangedEvent.next(this.documents.slice()
-          )
+          this.sortAndSend();
+          this.documentListChangedEvent.next(this.documents.slice())
         },
         (error: any) => {
           console.log(error);
@@ -74,20 +66,23 @@ export class DocumentsService {
       'Content-Type': 'application/json'
     });
 
-    newDocument.documentId = +'';
+    newDocument.documentId = 0;
     const strDocument = JSON.stringify(newDocument);
 
-    this.http.post('http://localhost:3000/documents'
+    this.http.post<{ message: String, document: Document }>('http://localhost:3000/documents'
       , strDocument
       , { headers: headers })
       .subscribe(
-        (documents: Document[]) => {
-          this.documents = documents;
+        (responseData) => {
+          this.documents.push(responseData.document);
+          this.sortAndSend();
           this.documentListChangedEvent.next(this.documents.slice());
         }
       );
   }
 
+
+  // WORKS
   updateDocument(originalDocument: Document, newDocument: Document) {
     if (!originalDocument || !newDocument) {
       return;
@@ -102,14 +97,15 @@ export class DocumentsService {
       'Content-Type': 'application/json'
     });
 
-    const strDocument = JSON.stringify(newDocument);
+    newDocument.documentId = originalDocument.documentId;
+    //const strDocument = JSON.stringify(newDocument);
 
-    this.http.patch('http://localhost:3000/documents' + originalDocument.documentId
-      , strDocument
+    this.http.put('http://localhost:3000/documents/' + originalDocument.documentId
+      , newDocument
       , { headers: headers })
       .subscribe(
-        (documents: Document[]) => {
-          this.documents = documents;
+        (response: Response) => {
+          this.documents[pos] = newDocument;
           this.documentListChangedEvent.next(this.documents.slice());
         });
   }
@@ -118,10 +114,18 @@ export class DocumentsService {
     if (!document) {
       return;
     }
+
+    const pos = this.documents.findIndex(d => d.documentId === document.documentId);
+
+    if (pos < 0) {
+      return;
+    }
+
     this.http.delete('http://localhost:3000/documents/' + document.documentId)
       .subscribe(
-        (documents: Document[]) => {
-          this.getDocuments();
+        (response: Response) => {
+          this.documents.splice(pos, 1);
+          this.sortAndSend();
         }
       );
   }

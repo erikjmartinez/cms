@@ -16,12 +16,10 @@ export class DocumentListComponent implements OnInit, OnDestroy {
   constructor(private documentService: DocumentsService,
     private router: Router,
     private route: ActivatedRoute) {
-      this.documents = this.documentService.getDocuments();
+    this.documents = this.documentService.getDocuments();
   }
 
   ngOnInit() {
-    //this.documents = this.documentService.getDocuments();
-   
     this.subscription = this.documentService.documentListChangedEvent
       .subscribe(
         (documents: Document[]) => {
@@ -33,8 +31,4 @@ export class DocumentListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-  // onSelectedDocument(document: Document) {
-  //   this.documentService.selectedDocumentEvent.emit(document);
-  // }
-
 }
